@@ -24,18 +24,20 @@ with open(CSV_path) as csv_file:
     for row in election_data:
         total_v += 1
 
-        # Create a list of the candidates/total vote/ and percent_votes of equal length to be zipped later
+        # Create a list of the candidates/total vote/ and percent_votes 
         if row[2] not in candidates:
             candidates.append(row[2])
             total_count.append(0)
             percent_votes.append(0)
+
+        # Check to see which candidate was voted for in the current row and add to its counter
         for i, candidate in enumerate(candidates):
             if candidate == row[2]:
                 total_count[i] += 1
-    # cerate a list for total_count and percent_votes with the same lenght as the candidates list
-    #or row in election_data:
-        #count += 1
-       
+        
+# Use the candidates respective total votes and divide by total overall votes to get percentage won
+for i in range(len(candidates)):
+    percent_votes[i] = "{:.3%}".format(total_count[i]/total_v)
 print(total_v)
 print(candidates)
 print(total_count)
