@@ -21,7 +21,7 @@ txt_outpath = os.path.join("Analysis", "bank.txt")
 
 with open(csv_path) as csv_file:
     budget_data = csv.reader(csv_file, delimiter = ",")
-    next(budget_data)
+    header = next(budget_data)
 
     # Create a for statements that will go thorugh each row in the dataset that was read in
     for  i, row in enumerate(budget_data):
@@ -36,16 +36,17 @@ with open(csv_path) as csv_file:
         if i > 0:
             current = int(row[1])
             avg_change.append(current - past)
+            monthly_change = current - past
 
-            # Check to see if the current is greater than the past and if so update greatest_increase
-            if current > greatest_increase:
+            # Check to see if the monthly_change is greater than the greatest_increase thus far and if so update.
+            if monthly_change > greatest_increase:
                 month_increase = row[0]
-                greatest_increase = current
+                greatest_increase = monthly_change
             
-            # Check to see if the current is less than the past and if so update greatest_decrease
-            elif current < greatest_decrease:
+            # Check to see if the monthly_change is less than the greatest_decrease thus far and if so update.
+            elif monthly_change < greatest_decrease:
                 month_decrease = row[0]
-                greatest_decrease = current
+                greatest_decrease = monthly_change
             past = int(row[1])
         else:
             past = int(row[1])
@@ -58,6 +59,7 @@ with open(txt_outpath, "w") as outfile:
     outfile.write("Financial analysis\n")
     outfile.write("-----------------------------\n")
     outfile.write(f"Total Months: {months}\n")
+    outfile.write(f"Total: ${net_total}\n")
     outfile.write(f"Average Change: ${avg_change}\n")
     outfile.write(f"Greatest Increase in Profits: {month_increase} (${greatest_increase})\n")
     outfile.write(f"Greatest Decrease in Profits: {month_decrease} (${greatest_decrease})\n")
@@ -65,4 +67,3 @@ with open(txt_outpath, "w") as outfile:
 # Open the new file you just created and also print the results on the terminal 
 with open(txt_outpath) as print_file:
     print(print_file.read())
-

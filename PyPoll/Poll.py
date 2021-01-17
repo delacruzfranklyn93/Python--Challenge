@@ -19,7 +19,7 @@ with open(CSV_path) as csv_file:
     election_data = csv.reader(csv_file, delimiter=",")
     
     # Skip the Header row in the CSV file
-    next(election_data)
+    header = next(election_data)
 
 
     # Start the for loop to get the total number of votes
@@ -45,9 +45,10 @@ for i in range(len(candidates)):
         highest_total = total_count[i]
         winner = candidates[i]
 
+# Create a variable that stores all the results of the candiates
 names = [f'{candidates[i]}: {percent_votes[i]} ({total_count[i]})' for i in range(len(candidates))]
 
-# Open the new text file you will write the final analysis into
+# Open the new text file you will write the final analysis into and start writing 
 with open(txt_path, "w") as txt_file:
     txt_file.write("Election Reults\n")
     txt_file.write("--------------------------\n")
@@ -58,7 +59,8 @@ with open(txt_path, "w") as txt_file:
     txt_file.write("--------------------------\n")
     txt_file.write(f'Winner: {winner}\n')
     txt_file.write("--------------------------")
-  
+
+# Open the file you have written to and print out the results to the terminal
 with open(txt_path) as path:
     print(path.read())
     
